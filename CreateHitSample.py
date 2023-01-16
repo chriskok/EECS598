@@ -1,36 +1,11 @@
-# Copyright 2017 Amazon.com, Inc. or its affiliates
-
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-
-# http://www.apache.org/licenses/LICENSE-2.0
-
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 import sys
 import boto3
+import json
+import pandas as pd
 from my_secrets import my_secrets
-
-# Before connecting to MTurk, set up your AWS account and IAM settings as
-# described here:
-# https://blog.mturk.com/how-to-use-iam-to-control-api-access-to-your-mturk-account-76fe2c2e66e2
-#
-# Follow AWS best practices for setting up credentials here:
-# http://boto3.readthedocs.io/en/latest/guide/configuration.html
-
-# Use the Amazon Mechanical Turk Sandbox to publish test Human Intelligence
-# Tasks (HITs) without paying any money.  Sign up for a Sandbox account at
-# https://requestersandbox.mturk.com/ with the same credentials as your main
-# MTurk account.
 
 # By default, HITs are created in the free-to-use Sandbox
 create_hits_in_live = False
-
 
 aws_access_key_id = my_secrets.get('aws_access_key_id')
 aws_secret_access_key = my_secrets.get('aws_secret_access_key')
@@ -65,11 +40,23 @@ client = boto3.client(
 # Test that you can connect to the API by checking your account balance
 user_balance = client.get_account_balance()
 
-# In Sandbox this always returns $10,000. In live, it will be your acutal balance.
+# In Sandbox this always returns $10,000. In live, it will be your actual balance.
 print ("Your account balance is {}".format(user_balance['AvailableBalance']))
 
+###########################################
+#                READ DATA                #
+###########################################
+head_df = pd.read_csv('data/Corona_NLP_test.csv').head(5)
+tweets = list(head_df['OriginalTweet'])
+
 # The question we ask the workers is contained in this file.
-question_sample = open("my_question.xml", "r").read()
+# question_sample = open("my_question.xml", "r").read()
+html_layout = open('./HIT.html', 'r').read()
+QUESTION_XML = """<HTMLQuestion xmlns="http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2011-11-11/HTMLQuestion.xsd">
+        <HTMLContent><![CDATA[{}]]></HTMLContent>
+        <FrameHeight>650</FrameHeight>
+        </HTMLQuestion>"""
+question_xml = QUESTION_XML.format(html_layout)
 
 # Example of using qualification to restrict responses to Workers who have had
 # at least 80% of their assignments approved. See:
@@ -81,26 +68,55 @@ worker_requirements = [{
     'RequiredToPreview': True,
 }]
 
-# Create the HIT
-response = client.create_hit(
-    MaxAssignments=3,
-    LifetimeInSeconds=600,
-    AssignmentDurationInSeconds=600,
-    Reward=mturk_environment['reward'],
-    Title='Answer a simple question',
-    Keywords='question, answer, research',
-    Description='Answer a simple question. Created from mturk-code-samples.',
-    Question=question_sample,
-    QualificationRequirements=worker_requirements,
-)
+TaskAttributes = {
+    'MaxAssignments': 5,           
+    # How long the task will be available on MTurk (1 hour)     
+    'LifetimeInSeconds': 60*60,
+    # How long Workers have to complete each item (10 minutes)
+    'AssignmentDurationInSeconds': 60*10,
+    # The reward you will offer Workers for each response
+    'Reward': mturk_environment['reward'],                     
+    'Title': 'Coronavirus Tweet Sentiment',
+    'Keywords': 'sentiment, tweet',
+    'Description': 'Rate the sentiment of a tweet on a scale of 1 to 5.',
+    'QualificationRequirements': worker_requirements,
+}
 
-# The response included several fields that will be helpful later
-hit_type_id = response['HIT']['HITTypeId']
-hit_id = response['HIT']['HITId']
-print ("\nCreated HIT: {}".format(hit_id))
+# # Create the HIT
+# response = client.create_hit(
+#     MaxAssignments=3,
+#     LifetimeInSeconds=600,
+#     AssignmentDurationInSeconds=600,
+#     Reward=mturk_environment['reward'],
+#     Title='Answer a simple question',
+#     Keywords='question, answer, research',
+#     Description='Answer a simple question. Created from mturk-code-samples.',
+#     Question=question_xml,
+#     QualificationRequirements=worker_requirements,
+# )
 
-print ("\nYou can work the HIT here:")
-print (mturk_environment['preview'] + "?groupId={}".format(hit_type_id))
+###########################################
+#               CREATE HITS               #
+###########################################
+
+results = []
+hit_type_id = ''
+for tweet in tweets:
+    response = client.create_hit(
+        **TaskAttributes,
+        Question=question_xml.replace('${content}',tweet)
+    )
+    hit_type_id = response['HIT']['HITTypeId']
+    results.append({
+        'tweet': tweet,
+        'hit_id': response['HIT']['HITId']
+    })
+    
+print("You can view the HITs here:")
+print(mturk_environment['preview']+"?groupId={}".format(hit_type_id))
 
 print ("\nAnd see results here:")
 print (mturk_environment['manage'])
+
+with open("results.json", "w") as final:
+   json.dump(results, final)
