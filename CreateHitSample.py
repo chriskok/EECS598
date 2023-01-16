@@ -43,6 +43,8 @@ user_balance = client.get_account_balance()
 # In Sandbox this always returns $10,000. In live, it will be your actual balance.
 print ("Your account balance is {}".format(user_balance['AvailableBalance']))
 
+
+
 ###########################################
 #                READ DATA                #
 ###########################################
@@ -50,7 +52,6 @@ head_df = pd.read_csv('data/Corona_NLP_test.csv').head(2)
 tweets = list(head_df['OriginalTweet'])
 
 # The question we ask the workers is contained in this file.
-# question_sample = open("my_question.xml", "r").read()
 html_layout = open('./index.html', 'r').read()
 QUESTION_XML = """<HTMLQuestion xmlns="http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2011-11-11/HTMLQuestion.xsd">
         <HTMLContent><![CDATA[{}]]></HTMLContent>
@@ -82,18 +83,7 @@ TaskAttributes = {
     'QualificationRequirements': worker_requirements,
 }
 
-# # Create the HIT
-# response = client.create_hit(
-#     MaxAssignments=3,
-#     LifetimeInSeconds=600,
-#     AssignmentDurationInSeconds=600,
-#     Reward=mturk_environment['reward'],
-#     Title='Answer a simple question',
-#     Keywords='question, answer, research',
-#     Description='Answer a simple question. Created from mturk-code-samples.',
-#     Question=question_xml,
-#     QualificationRequirements=worker_requirements,
-# )
+
 
 ###########################################
 #               CREATE HITS               #
