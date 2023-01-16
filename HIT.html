@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!-- saved from url=(0078)https://s3.amazonaws.com/mturk/samples/jupyter-examples/SentimentQuestion.html -->
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>HIT</title><script type="text/javascript" src="./HIT_files/externalHIT_v1.js.download"></script>
+        <script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+    <body>
+        <!-- <form name="mturk_form" method="post" id="mturk_form" action="https://www.mturk.com/mturk/externalSubmit"><input type="hidden" value="" name="assignmentId" id="assignmentId"> -->
+        <meta content="width=device-width,initial-scale=1" name="viewport">
+        <section class="container" id="Sentiment">
+            <!-- Instructions (collapsible) -->
+            <div class="row">
+                <div class="col-xs-12 col-md-12">
+                    <div class="panel panel-primary"><!-- WARNING: the ids "collapseTrigger" and "instructionBody" are being used to enable expand/collapse feature --><a class="panel-heading" href="javascript:void(0);" id="collapseTrigger"><strong>Sentiment Analysis Instructions</strong> <span class="collapse-text">(Click to expand)</span> </a>
+                        <div class="panel-body" id="instructionBody" style="display: none;"><strong>Pick the best sentiment based on the following criterion:</strong>
+                            <table class="table table-condensed table-striped table-responsive">
+                                <tbody>
+                                </tbody>
+                                <colgroup>
+                                    <col class="col-xs-2 col-md-2">
+                                    <col class="col-xs-10 col-md-10">
+                                </colgroup>
+                                <!-- By explaining the sentiment scale, the accuracy of the answers may increase. -->
+                                <tbody>
+                                <tr>
+                                    <th>Sentiment</th>
+                                    <th>Guidance</th>
+                                </tr>
+                                <tr>
+                                    <td>5 - Strongly positive</td>
+                                    <td>Select this if the item embodies emotion that was extremely happy or excited toward the topic. For example, "Their customer service is the best that I've seen!!!!"</td>
+                                </tr>
+                                <tr>
+                                    <td>3 - Neutral</td>
+                                    <td>Select this if the item does not embody much of positive or negative emotion toward the topic. For example, "Yeah, I guess it's ok." or "Is their customer service open 24x7?"</td>
+                                </tr>
+                                <tr>
+                                    <td>1 - Strongly negative</td>
+                                    <td>Select this if the item embodies negative emotion toward the topic that can be perceived as extreme. For example, "The experience was horrible!!" or "I will NEVER shop there again!!!"</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End instructions --><!-- Categorization Layout -->
+
+            <div class="row" id="workContent">
+                <div class="col-xs-12 col-sm-8 content"><!-- Place the content (in this case a block of text) below. If content is not text then replace with the relevant html element (image, url, video) below. -->
+                    <p class="well">${content}</p>
+                </div>
+                <form name='mturk_form' method='post' id='mturk_form' action='https://www.mturk.com/mturk/externalSubmit'>
+                    <input type='hidden' value='' name='assignmentId' id='assignmentId'/>
+                    <!-- <div class="col-xs-12 col-sm-4 fields">
+                        <div class="form-group"><label class="group-label">Sentiment expressed by the content:</label> 
+
+                            <div class="btn-group-vertical" data-toggle="buttons" id="Inputs">
+                                <label class="btn btn-default">
+                                    <input id="Ten" name="sentiment" required="" type="radio" value="10">
+                                    10 (Strongly Positive) 
+                                </label> 
+                                <label class="btn btn-default">
+                                    <input id="Nine" name="sentiment" required="" type="radio" value="9">
+                                    9
+                                </label> 
+                                <label class="btn btn-default">
+                                    <input id="Eight" name="sentiment" required="" type="radio" value="8">
+                                    8
+                                </label> 
+                                <label class="btn btn-default">
+                                    <input id="Seven" name="sentiment" required="" type="radio" value="7">
+                                    7 
+                                </label> 
+                                <label class="btn btn-default">
+                                    <input id="Six" name="sentiment" required="" type="radio" value="6">
+                                    6
+                                </label> 
+                                <label class="btn btn-default">
+                                    <input id="Five" name="sentiment" required="" type="radio" value="5">
+                                    5 
+                                </label> 
+                                <label class="btn btn-default">
+                                    <input id="Four" name="sentiment" required="" type="radio" value="4">
+                                    4
+                                </label> 
+                                <label class="btn btn-default">
+                                    <input id="Three" name="sentiment" required="" type="radio" value="3">
+                                    3
+                                </label> 
+                                <label class="btn btn-default">
+                                    <input id="Two" name="sentiment" required="" type="radio" value="2">
+                                    2
+                                </label> 
+                                <label class="btn btn-default">
+                                    <input id="One" name="sentiment" required="" type="radio" value="1">
+                                    1 (Strongly Negative)
+                                </label> 
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="form-group">
+                        <label for="sentiment_selection">Example select</label>
+                        <select name='sentiment_selection' class="form-control" id="sentiment_selection">
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                        </select>
+                      </div>
+                    <input type="submit" class="btn btn-info" id='submitButton' value="Submit">
+                </form>
+            </div>
+        </section>
+
+<script language='Javascript'>turkSetAssignmentID();</script>
+<style type="text/css">#collapseTrigger{
+    color:#fff;
+    display: block;
+    text-decoration: none;
+}
+#submitButton{
+    white-space: normal;
+}
+#instructionBody table{
+    font-size: 14px;
+    margin-top: 10px;
+}
+#instructionBody table caption{
+    text-align: left;
+    padding: 0 0 5px 0;
+}
+#Inputs{
+    display: block;
+    margin-top: 10px;
+}
+.content{
+    margin-bottom: 15px;
+}
+.radio:first-of-type{
+    margin-top: -5px;
+}
+</style>
+
+    <script>
+        $(document).ready(function() {
+            // Instructions expand/collapse
+            var content = $('#instructionBody');
+            var trigger = $('#collapseTrigger');
+            content.hide();
+            $('.collapse-text').text('(Click to expand)');
+            trigger.click(function(){
+                content.toggle();
+                var isVisible = content.is(':visible');
+                if(isVisible){
+                    $('.collapse-text').text('(Click to collapse)');
+                }else{
+                    $('.collapse-text').text('(Click to expand)');
+                }
+            });
+            // end expand/collapse
+
+            // highlight selected category
+            var inputs = $("#Inputs input:radio");
+            inputs.change(function(){
+                inputs.parent().removeClass("btn-success");
+                inputs.parent().addClass("btn-default");
+                if($(this).is(":checked")){
+                    $(this).parent().removeClass("btn-default");
+                    $(this).parent().addClass("btn-success");
+                }else{
+                    $(this).parent().removeClass("btn-success");
+                    $(this).parent().addClass("btn-default");
+                }
+            });
+            // end highlight
+        });
+    </script>
+    </body>
+</html>

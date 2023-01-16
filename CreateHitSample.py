@@ -46,12 +46,12 @@ print ("Your account balance is {}".format(user_balance['AvailableBalance']))
 ###########################################
 #                READ DATA                #
 ###########################################
-head_df = pd.read_csv('data/Corona_NLP_test.csv').head(5)
+head_df = pd.read_csv('data/Corona_NLP_test.csv').head(2)
 tweets = list(head_df['OriginalTweet'])
 
 # The question we ask the workers is contained in this file.
 # question_sample = open("my_question.xml", "r").read()
-html_layout = open('./HIT.html', 'r').read()
+html_layout = open('./index.html', 'r').read()
 QUESTION_XML = """<HTMLQuestion xmlns="http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2011-11-11/HTMLQuestion.xsd">
         <HTMLContent><![CDATA[{}]]></HTMLContent>
         <FrameHeight>650</FrameHeight>
@@ -78,7 +78,7 @@ TaskAttributes = {
     'Reward': mturk_environment['reward'],                     
     'Title': 'Coronavirus Tweet Sentiment',
     'Keywords': 'sentiment, tweet',
-    'Description': 'Rate the sentiment of a tweet on a scale of 1 to 5.',
+    'Description': 'Rate the sentiment of a coronavirus-related tweet',
     'QualificationRequirements': worker_requirements,
 }
 
