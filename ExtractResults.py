@@ -1,9 +1,12 @@
 import json
 import sys
 import boto3
+import xmltodict
+import csv
+
+from os import path
 from xml.dom.minidom import parseString
 from my_secrets import my_secrets
-import xmltodict
 
 f = open('results.json')
 results = json.load(f)
@@ -43,43 +46,53 @@ client = boto3.client(
     aws_secret_access_key=aws_secret_access_key,
 )
 
-for item in results:
-    
-    # Get the status of the HIT
-    hit = client.get_hit(HITId=item['hit_id'])
-    item['status'] = hit['HIT']['HITStatus']
-    # Get a list of the Assignments that have been submitted
-    assignmentsList = client.list_assignments_for_hit(
-        HITId=item['hit_id'],
-        AssignmentStatuses=['Submitted', 'Approved'],
-        MaxResults=10
-    )
-    assignments = assignmentsList['Assignments']
-    item['assignments_submitted_count'] = len(assignments)
-    answers = []
-    for assignment in assignments:
-    
-        # Retreive the attributes for each Assignment
-        worker_id = assignment['WorkerId']
-        assignment_id = assignment['AssignmentId']
-        
-        # Retrieve the value submitted by the Worker from the XML
-        answer_dict = xmltodict.parse(assignment['Answer'])
-        print(answer_dict)
+write_header = False
+if not path.exists('assignments.csv'): 
+    write_header = True
 
-        answer = answer_dict['QuestionFormAnswers']['Answer']['FreeText']
-        # answers.append(int(answer))
-        
-        # Approve the Assignment (if it hasn't been already)
-        if assignment['AssignmentStatus'] == 'Submitted':
-            client.approve_assignment(
-                AssignmentId=assignment_id,
-                OverrideRejection=False
-            )
-    
-    # Add the answers that have been retrieved for this item
-    # item['answers'] = answers
-    # if len(answers) > 0:
-    #     item['avg_answer'] = sum(answers)/len(answers)
+with open('assignments.csv', 'a', newline='') as csvfile:
+    fieldnames = ['AssignmentId', 'WorkerId', 'HITId', 'AutoApprovalTime', 'AcceptTime', 'SubmitTime', 'Answer']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    if(write_header): writer.writeheader()
 
-# print(json.dumps(results,indent=2))
+    for item in results:
+        
+        # Get the status of the HIT
+        hit = client.get_hit(HITId=item['hit_id'])
+        item['status'] = hit['HIT']['HITStatus']
+        # Get a list of the Assignments that have been submitted
+        assignmentsList = client.list_assignments_for_hit(
+            HITId=item['hit_id'],
+            AssignmentStatuses=['Submitted', 'Approved'],
+            MaxResults=10
+        )
+        assignments = assignmentsList['Assignments']
+        item['assignments_submitted_count'] = len(assignments)
+        answers = []
+        for assignment in assignments:
+        
+            # Retreive the attributes for each Assignment
+            worker_id = assignment['WorkerId']
+            assignment_id = assignment['AssignmentId']
+            
+            # Retrieve the value submitted by the Worker from the XML
+            answer_dict = xmltodict.parse(assignment['Answer'])
+            print(assignment)
+
+            answer = answer_dict['QuestionFormAnswers']['Answer']['FreeText']
+            # answers.append(int(answer))
+            
+            # Approve the Assignment (if it hasn't been already)
+            if assignment['AssignmentStatus'] == 'Submitted':
+                client.approve_assignment(
+                    AssignmentId=assignment_id,
+                    OverrideRejection=False
+                )
+
+                writer.writerow({'AssignmentId': assignment['AssignmentId'], 
+                                'WorkerId': assignment['WorkerId'], 
+                                'HITId': assignment['HITId'],  
+                                'AutoApprovalTime': assignment['AutoApprovalTime'],  
+                                'AcceptTime': assignment['AcceptTime'],  
+                                'SubmitTime': assignment['SubmitTime'],  
+                                'Answer': int(answer)})
