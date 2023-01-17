@@ -21,7 +21,7 @@ environments = {
             "endpoint": "https://mturk-requester-sandbox.us-east-1.amazonaws.com",
             "preview": "https://workersandbox.mturk.com/mturk/preview",
             "manage": "https://requestersandbox.mturk.com/mturk/manageHITs",
-            "reward": "0.11"
+            "reward": "0.10"
         },
 }
 mturk_environment = environments["live"] if create_hits_in_live else environments["sandbox"]
@@ -48,7 +48,7 @@ print ("Your account balance is {}".format(user_balance['AvailableBalance']))
 ###########################################
 #                READ DATA                #
 ###########################################
-head_df = pd.read_csv('data/Corona_NLP_test.csv').head(5)
+head_df = pd.read_csv('data/Corona_NLP_test.csv').tail(10)
 tweets = list(head_df['OriginalTweet'])
 
 # The question we ask the workers is contained in this file.
@@ -70,16 +70,16 @@ worker_requirements = [{
 }]
 
 TaskAttributes = {
-    'MaxAssignments': 5,           
-    # How long the task will be available on MTurk (1 hour)     
-    'LifetimeInSeconds': 60*60,
-    # How long Workers have to complete each item (10 minutes)
-    'AssignmentDurationInSeconds': 60*10,
+    'MaxAssignments': 7,           
+    # How long the task will be available on MTurk (30 days)     
+    'LifetimeInSeconds': 60*60*24*15,
+    # How long Workers have to complete each item (2 minutes)
+    'AssignmentDurationInSeconds': 60*2,
     # The reward you will offer Workers for each response
     'Reward': mturk_environment['reward'],                     
-    'Title': 'Covid-19 Tweet Sentiment',
+    'Title': 'Covid-19 Tweet Sentiment Analysis',
     'Keywords': 'sentiment, tweet, coronavirus, covid19, covid',
-    'Description': 'Rate the sentiment of a coronavirus-related tweet',
+    'Description': 'Rate the sentiment (positivity/negativity) of a coronavirus-related tweet',
     'QualificationRequirements': worker_requirements,
 }
 
