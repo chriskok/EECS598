@@ -16,36 +16,109 @@
     <script src="https://code.jquery.com/jquery-3.6.3.js"></script>
     </head>
     <body>
-        <p>
-            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-            Instructions
-            </button>
-        </p>
-        <div class="collapse" id="collapseExample">
-            <div class="card card-body">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+        <div class="container">
+            <!-- Instructions (collapsible) -->
+            <div class="row">
+                <div class="col-xs-12 col-md-12">
+                    <div class="panel panel-primary"><!-- WARNING: the ids "collapseTrigger" and "instructionBody" are being used to enable expand/collapse feature -->
+                        <a class="panel-heading" href="javascript:void(0);" id="collapseTrigger"><strong>Sentiment Analysis</strong> <span class="collapse-text">(Click for instructions)</span> </a>
+                        <div class="panel-body" id="instructionBody" style="display: none;"><strong>Pick the best sentiment based on the following criterion:</strong>
+                            <table class="table table-condensed table-striped table-responsive">
+                                <tbody>
+                                </tbody>
+                                <colgroup>
+                                    <col class="col-xs-2 col-md-2">
+                                    <col class="col-xs-10 col-md-10">
+                                </colgroup>
+                                <!-- By explaining the sentiment scale, the accuracy of the answers may increase. -->
+                                <tbody>
+                                <tr>
+                                    <th>Sentiment</th>
+                                    <th>Guidance</th>
+                                </tr>
+                                <tr>
+                                    <td>5 - Strongly positive</td>
+                                    <td>Select this if the item embodies emotion that was extremely happy or excited toward the topic. For example, "Vaccine distribution has skyrocketed in the last 2 weeks!"</td>
+                                </tr>
+                                <tr>
+                                    <td>3 - Neutral</td>
+                                    <td>Select this if the item does not embody much of positive or negative emotion toward the topic. For example, "Cases of Covid-19 have been fluctuating here in Malaysia."</td>
+                                </tr>
+                                <tr>
+                                    <td>1 - Strongly negative</td>
+                                    <td>Select this if the item embodies negative emotion toward the topic that can be perceived as extreme. For example, "Grocery stores are sold out, we are all afraid of food shortages!! $114.97 for a 2 pack of Purell??!"</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <form name='mturk_form' method='post' id='mturk_form' action='https://www.mturk.com/mturk/externalSubmit'>
-            <input type='hidden' value='' name='assignmentId' id='assignmentId'/>
-            <p>Tweet: ${content}</p>
+            <br>
 
-            <!-- <p><textarea name='comment' cols='80' rows='3'></textarea></p> -->
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Coronavirus-related tweet</h5>
+                  <p class="card-text">${content}</p>
+                </div>
+            </div>
+
+            <br>
             
-            <div class="form-group">
-                <label for="sentiment_selection">Select Sentiment</label>
-                <select name='sentiment_selection' class="form-control" id="sentiment_selection">
-                  <option>1 - Very Negative</option>
-                  <option>2</option>
-                  <option>3 - Neutral</option>
-                  <option>4</option>
-                  <option>5 - Very Positive</option>
-                </select>
-              </div>
+            <form name='mturk_form' method='post' id='mturk_form' action='https://www.mturk.com/mturk/externalSubmit'>
+                <input type='hidden' value='' name='assignmentId' id='assignmentId'/>
+                <!-- <p>Tweet: {content}</p> -->
+                
+                <div class="form-group">
+                    <label for="sentiment_selection">Select sentiment (1 = very negative, 5 = very positive)</label>
+                    <select name='sentiment_selection' class="form-control" id="sentiment_selection">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    </select>
+                </div>
 
-            <p><input type='submit' id='submitButton' value='Submit' /></p>
-        </form>
+                <p><input type='submit' class="btn btn-primary" id='submitButton' value='Submit' /></p>
+            </form> 
+        </div>
+        
         <script language='Javascript'>turkSetAssignmentID();</script>
+        <script>
+            $(document).ready(function() {
+                // Instructions expand/collapse
+                var content = $('#instructionBody');
+                var trigger = $('#collapseTrigger');
+                content.hide();
+                $('.collapse-text').text('(Click for instructions)');
+                trigger.click(function(){
+                    content.toggle();
+                    var isVisible = content.is(':visible');
+                    if(isVisible){
+                        $('.collapse-text').text('(Click to collapse)');
+                    }else{
+                        $('.collapse-text').text('(Click for instructions)');
+                    }
+                });
+                // end expand/collapse
+    
+                // highlight selected category
+                var inputs = $("#Inputs input:radio");
+                inputs.change(function(){
+                    inputs.parent().removeClass("btn-success");
+                    inputs.parent().addClass("btn-default");
+                    if($(this).is(":checked")){
+                        $(this).parent().removeClass("btn-default");
+                        $(this).parent().addClass("btn-success");
+                    }else{
+                        $(this).parent().removeClass("btn-success");
+                        $(this).parent().addClass("btn-default");
+                    }
+                });
+                // end highlight
+            });
+        </script>
     </body>
 </html>

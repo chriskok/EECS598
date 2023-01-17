@@ -48,7 +48,7 @@ print ("Your account balance is {}".format(user_balance['AvailableBalance']))
 ###########################################
 #                READ DATA                #
 ###########################################
-head_df = pd.read_csv('data/Corona_NLP_test.csv').head(2)
+head_df = pd.read_csv('data/Corona_NLP_test.csv').head(5)
 tweets = list(head_df['OriginalTweet'])
 
 # The question we ask the workers is contained in this file.
@@ -78,7 +78,7 @@ TaskAttributes = {
     # The reward you will offer Workers for each response
     'Reward': mturk_environment['reward'],                     
     'Title': 'Coronavirus Tweet Sentiment',
-    'Keywords': 'sentiment, tweet',
+    'Keywords': 'sentiment, tweet, coronavirus, twitter, covid',
     'Description': 'Rate the sentiment of a coronavirus-related tweet',
     'QualificationRequirements': worker_requirements,
 }
