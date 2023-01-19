@@ -77,9 +77,9 @@ TaskAttributes = {
     'AssignmentDurationInSeconds': 60*2,
     # The reward you will offer Workers for each response
     'Reward': mturk_environment['reward'],                     
-    'Title': 'Covid-19 Tweet Sentiment Analysis',
+    'Title': 'Covid-19 Tweet Sentiment',
     'Keywords': 'sentiment, tweet, coronavirus, covid19, covid',
-    'Description': 'Rate the sentiment (positivity/negativity) of a coronavirus-related tweet',
+    'Description': 'Rate the sentiment of a covid-19 tweet',
     'QualificationRequirements': worker_requirements,
 }
 
