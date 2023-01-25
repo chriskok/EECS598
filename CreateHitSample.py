@@ -72,7 +72,7 @@ worker_requirements = [{
 TaskAttributes = {
     'MaxAssignments': 7,           
     # How long the task will be available on MTurk (30 days)     
-    'LifetimeInSeconds': 60*60*24*30,
+    'LifetimeInSeconds': 60*60*24*50,
     # How long Workers have to complete each item (2 minutes)
     'AssignmentDurationInSeconds': 60*2,
     # The reward you will offer Workers for each response

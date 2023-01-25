@@ -13,32 +13,40 @@
             <!-- Instructions (collapsible) -->
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <div class="panel panel-primary"><!-- WARNING: the ids "collapseTrigger" and "instructionBody" are being used to enable expand/collapse feature --><a class="panel-heading" href="javascript:void(0);" id="collapseTrigger"><strong>Sentiment Analysis Instructions</strong> <span class="collapse-text">(Click to expand)</span> </a>
+                    <div class="panel panel-primary"><!-- WARNING: the ids "collapseTrigger" and "instructionBody" are being used to enable expand/collapse feature --><a class="panel-heading" href="javascript:void(0);" id="collapseTrigger">
+                        <strong>Sentiment Analysis Instructions</strong> 
+                        <button type="button" class="btn btn-info">Instructions</button>
+                        <span class="collapse-text">(Click to expand)</span> </a>
                         <div class="panel-body" id="instructionBody" style="display: none;"><strong>Pick the best sentiment based on the following criterion:</strong>
                             <table class="table table-condensed table-striped table-responsive">
                                 <tbody>
                                 </tbody>
                                 <colgroup>
                                     <col class="col-xs-2 col-md-2">
-                                    <col class="col-xs-10 col-md-10">
+                                    <col class="col-xs-4 col-md-4">
+                                    <col class="col-xs-6 col-md-6">
                                 </colgroup>
                                 <!-- By explaining the sentiment scale, the accuracy of the answers may increase. -->
                                 <tbody>
                                 <tr>
                                     <th>Sentiment</th>
                                     <th>Guidance</th>
+                                    <th>Example</th>
                                 </tr>
                                 <tr>
-                                    <td>5 - Strongly positive</td>
-                                    <td>Select this if the item embodies emotion that was extremely happy or excited toward the topic. For example, "Their customer service is the best that I've seen!!!!"</td>
+                                    <td>Strongly negative</td>
+                                    <td>Select this if the item embodies negative emotion toward the topic that can be perceived as extreme.</td>
+                                    <td>"I hate grocery shopping in general but I swear I'm doing it online next shop, can not deal with the swathes of panic buyers at all! #COVID?19 #coronavirus #coronavirusuk #anxiety #panicbuyinguk #morons"</td>
                                 </tr>
                                 <tr>
-                                    <td>3 - Neutral</td>
-                                    <td>Select this if the item does not embody much of positive or negative emotion toward the topic. For example, "Yeah, I guess it's ok." or "Is their customer service open 24x7?"</td>
+                                    <td>Neutral</td>
+                                    <td>Select this if the item does not embody much of positive or negative emotion toward the topic.</td>
+                                    <td>"Went to the supermarket yesterday and the toilet paper was gone. Has this anything to do with the Corona virus? #COVID2019"</td>
                                 </tr>
                                 <tr>
-                                    <td>1 - Strongly negative</td>
-                                    <td>Select this if the item embodies negative emotion toward the topic that can be perceived as extreme. For example, "The experience was horrible!!" or "I will NEVER shop there again!!!"</td>
+                                    <td>Strongly positive</td>
+                                    <td>Select this if the item embodies emotion that was extremely happy or excited toward the topic.</td>
+                                    <td>""We have AMAZING CHEAP DEALS! FOR THE #COVID2019 going on to help you???"</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -57,11 +65,11 @@
                     <div class="form-group">
                         <label for="sentiment_selection">Example select</label>
                         <select name='sentiment_selection' class="form-control" id="sentiment_selection">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
+                          <option>Extremely Negative</option>
+                          <option>Negative</option>
+                          <option>Neutral</option>
+                          <option>Positive</option>
+                          <option>Extremely Positive</option>
                         </select>
                       </div>
                     <input type="submit" class="btn btn-info" id='submitButton' value="Submit">
