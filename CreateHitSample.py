@@ -48,7 +48,7 @@ print ("Your account balance is {}".format(user_balance['AvailableBalance']))
 ###########################################
 #                READ DATA                #
 ###########################################
-head_df = pd.read_csv('data/Corona_NLP_test.csv').tail(10)
+head_df = pd.read_csv('data/Corona_NLP_chosen.csv').tail(10)
 tweets = list(head_df['OriginalTweet'])
 
 # The question we ask the workers is contained in this file.
@@ -74,12 +74,12 @@ TaskAttributes = {
     # How long the task will be available on MTurk (30 days)     
     'LifetimeInSeconds': 60*60*24*50,
     # How long Workers have to complete each item (2 minutes)
-    'AssignmentDurationInSeconds': 60*2,
+    'AssignmentDurationInSeconds': 60*20,
     # The reward you will offer Workers for each response
     'Reward': mturk_environment['reward'],                     
     'Title': 'Covid-19 Tweet Sentiment',
-    'Keywords': 'sentiment, tweet, coronavirus, covid19, covid',
-    'Description': 'Rate the sentiment of a covid-19 tweet',
+    'Keywords': 'sentiment, tweet, coronavirus, covid19',
+    'Description': 'Rate the positivity/negativity of tweets related to the covid-19 pandemic.',
     'QualificationRequirements': worker_requirements,
 }
 

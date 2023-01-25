@@ -95,4 +95,4 @@ with open('assignments.csv', 'a', newline='') as csvfile:
                                 'AutoApprovalTime': assignment['AutoApprovalTime'],  
                                 'AcceptTime': assignment['AcceptTime'],  
                                 'SubmitTime': assignment['SubmitTime'],  
-                                'Answer': int(answer)})
+                                'Answer': answer})
