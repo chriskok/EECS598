@@ -50,7 +50,7 @@ print ("Your account balance is {}".format(user_balance['AvailableBalance']))
 ###########################################
 head_df = pd.read_csv('data/Corona_NLP_chosen.csv').tail(10)
 # tweets = list(head_df['OriginalTweet'])
-head_df['Label'] = [1,0,-1,-1,-1,-1,1,1,0,1]
+head_df['Label'] = [1, 0, -1, 1, -1, -1, 1, 1, 1, -1]
 
 # The question we ask the workers is contained in this file.
 html_layout = open('./index.html', 'r').read()
