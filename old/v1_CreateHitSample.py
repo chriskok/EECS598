@@ -49,8 +49,7 @@ print ("Your account balance is {}".format(user_balance['AvailableBalance']))
 #                READ DATA                #
 ###########################################
 head_df = pd.read_csv('data/Corona_NLP_chosen.csv').tail(10)
-# tweets = list(head_df['OriginalTweet'])
-head_df['Label'] = [1,0,-1,-1,-1,-1,1,1,0,1]
+tweets = list(head_df['OriginalTweet'])
 
 # The question we ask the workers is contained in this file.
 html_layout = open('./index.html', 'r').read()
@@ -72,15 +71,15 @@ worker_requirements = [{
 
 TaskAttributes = {
     'MaxAssignments': 7,           
-    # How long the task will be available on MTurk (100 days)     
-    'LifetimeInSeconds': 60*60*24*100,
-    # How long Workers have to complete each item (20 minutes)
+    # How long the task will be available on MTurk (30 days)     
+    'LifetimeInSeconds': 60*60*24*50,
+    # How long Workers have to complete each item (2 minutes)
     'AssignmentDurationInSeconds': 60*20,
     # The reward you will offer Workers for each response
     'Reward': mturk_environment['reward'],                     
-    'Title': 'AI-Assisted Tweet Sentiment',
-    'Keywords': 'sentiment, tweet, coronavirus, covid19, human-AI, HCI',
-    'Description': 'Rate the positivity/negativity of tweets. AI will assist you with a suggested answer per each task.',
+    'Title': 'Covid-19 Tweet Sentiment',
+    'Keywords': 'sentiment, tweet, coronavirus, covid19',
+    'Description': 'Rate the positivity/negativity of tweets related to the covid-19 pandemic.',
     'QualificationRequirements': worker_requirements,
 }
 
@@ -92,17 +91,15 @@ TaskAttributes = {
 
 results = []
 hit_type_id = ''
-for idx, row in head_df.iterrows():
+for tweet in tweets:
     response = client.create_hit(
         **TaskAttributes,
-        Question=question_xml.replace('${content}',row['OriginalTweet']).replace('${default_choice}',"sentiment_{}".format(str(row['Label'])))
+        Question=question_xml.replace('${content}',tweet)
     )
     hit_type_id = response['HIT']['HITTypeId']
     results.append({
-        'tweet': row['OriginalTweet'],
-        'hit_id': response['HIT']['HITId'],
-        'sentiment': row['Sentiment'],
-        'label': row['Label'],
+        'tweet': tweet,
+        'hit_id': response['HIT']['HITId']
     })
     
 print("You can view the HITs here:")

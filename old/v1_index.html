@@ -94,9 +94,9 @@
                     <label for="sentiment_selection">Select sentiment:</label>
                     <select name='sentiment_selection' class="form-control" id="sentiment_selection">
                         <option>Extremely Negative</option>
-                        <option id="sentiment_-1">Negative</option>
-                        <option id="sentiment_0">Neutral</option>
-                        <option id="sentiment_1">Positive</option>
+                        <option>Negative</option>
+                        <option>Neutral</option>
+                        <option>Positive</option>
                         <option>Extremely Positive</option>
                     </select>
                 </div>
@@ -138,11 +138,6 @@
                     }
                 });
                 // end highlight
-
-                // Get the select element
-                var el = document.getElementById("${default_choice}");
-                // Set the option to selected
-                el.selected = true;
             });
         </script>
     </body>
