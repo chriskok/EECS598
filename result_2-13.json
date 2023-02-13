@@ -1,0 +1,62 @@
+[
+    {
+        "tweet": "#Covid_19 Went to the Grocery Store, turns out all cleaning supplies have been bought out for fear of Coronavirus. My daughter's substitute teacher showed her class how to make hand sanitizer. Now I just need to buy some 100% alcohol. Wish me luck that any stores will have it.",
+        "hit_id": "3NFWQRSHWS8BYDHD6G79S59TS6IFG4",
+        "sentiment": "Extremely Positive",
+        "label": 1
+    },
+    {
+        "tweet": "When youre stockpiling food & other supplies, buy extra for your local food bank. Many families don't have the luxury to spend beyond their weekly budget. @DailyBreadTO  #coronavirus",
+        "hit_id": "3A9LA2FRX686YV39QGVDJCL1BBRHXW",
+        "sentiment": "Neutral",
+        "label": 0
+    },
+    {
+        "tweet": "While you are stocking up, waiting for quarantine, if you can dont forget to donate  food, water, and toiletries to your local food banks to help others without the means to stock up. Get ahead of it before it becomes a crisis. #covid19 #coronavirus",
+        "hit_id": "3LOJFQ4BPB9J2FZ051XY2XY1NAJKD1",
+        "sentiment": "Negative",
+        "label": -1
+    },
+    {
+        "tweet": "Two important phone numbers NYers should know. If you have no doctor or insurance and think you may be sick and need to be tested for #coronavirus, call the state's helpline: 1-888-364-3065. To report price gouging, call the Div. of Consumer Protection at 1-800-697-1220.",
+        "hit_id": "3ZTE0JGGDSMSNEE13XUGP8XSMFHCOD",
+        "sentiment": "Negative",
+        "label": -1
+    },
+    {
+        "tweet": "Remember, with all the media deflection stories about bog rolls, panic-buying, food shortages, Covid-19, Irish bridges etc etc.We've still got Brexit, Austerity, poverty, a crashing economy & the worst UK Govt in living memory. All depressing stuff & it aint gonna end well.",
+        "hit_id": "36JW4WBR1KEPY9COQMPRD5LU76VFH3",
+        "sentiment": "Extremely Negative",
+        "label": -1
+    },
+    {
+        "tweet": "The beginning of a  global recession! #Coronavirus damaging health crisis?",
+        "hit_id": "3YLTXLH3ET01PM1I4PLWPZZY9CIPHG",
+        "sentiment": "Extremely Negative",
+        "label": -1
+    },
+    {
+        "tweet": "Popped into my local supermarket after work. The baskets are noticeably clean... There's no hand wash or bog roll ????? not that I needed any... did no one wash before #Covid_19 ?",
+        "hit_id": "3AJA9FLWTQSPU4N8W47CDHM97JAFIW",
+        "sentiment": "Positive",
+        "label": 1
+    },
+    {
+        "tweet": "Small reminder: stock up on bar soap for your local food pantry/ place of worship. Our guests at our feeding ministry have asked for it (more portable than liquid hand soap) & they need to stay safe from covid-19 too.",
+        "hit_id": "3CRWSLD92YY5W0QSGMOUS424GTLMO5",
+        "sentiment": "Extremely Positive",
+        "label": 1
+    },
+    {
+        "tweet": "Just did online shopping and first available slot was Sunday at 11pm-12am. Loo roll and baked beans sold out. #coronavirus",
+        "hit_id": "366FYU4PUUJOULD01W8I8FGMNMKKEU",
+        "sentiment": "Neutral",
+        "label": 0
+    },
+    {
+        "tweet": "@Disney What would it take for my family to pay movie ticket prices and watch this at home to avoid the #Covid_19 ? Happy to pay the $$$s.",
+        "hit_id": "3RZS0FBRXY4A8EQ2IX7VE82IWKDCPU",
+        "sentiment": "Positive",
+        "label": 1
+    }
+]
